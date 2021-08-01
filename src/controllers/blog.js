@@ -17,6 +17,6 @@ export const createBlog = asyncHandler(async (req, res) => {
       });
     } else {
       res.status(400);
-      throw new Error("Invalid");
+      throw new Error("Invalid data");
     }
   });
