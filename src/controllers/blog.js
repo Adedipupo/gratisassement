@@ -1,6 +1,8 @@
 import asyncHandler from "express-async-handler";
 import BlogModel from "../models/blog.js";
+import mongoose from 'mongoose';
 
+// create a blog post
 export const createBlog = asyncHandler(async (req, res) => {
    try {
     const { title, body, comments } = req.body;
@@ -34,6 +36,7 @@ export const createBlog = asyncHandler(async (req, res) => {
    }
   });
 
+// get all blog posts  
   export const getAllBlogPost = asyncHandler(async(req,res)=>{
     try {
       const posts = await BlogModel.find();
@@ -51,11 +54,12 @@ export const createBlog = asyncHandler(async (req, res) => {
     }
   })
 
+// get a single blog post  
   export const getABlogPost = asyncHandler(async(req,res)=>{
     try {
       const {id} = req.params;
       if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        res.failServerError("Invalid post Id");
+        return res.status(400).json({message: 'Invalid Id'})
       }
       const post = await BlogModel.findById(id);
 
@@ -72,6 +76,7 @@ export const createBlog = asyncHandler(async (req, res) => {
     }
   })
 
+// get all blog postswith pagination  
   export const getAllPosts = asyncHandler(async(req,res)=>{
     try {
       const pageSize = Number(req.query.pageSize) || 3;
