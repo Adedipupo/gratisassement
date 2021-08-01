@@ -1,5 +1,5 @@
 import express from 'express';
-import { commentOnPost, createBlog, deletePost, getABlogPost, getAllBlogPost, getAllPosts, updateAPost, updateComment } from '../controllers/blog.js';
+import { commentOnPost, createBlog, deletePost, getABlogPost, getAllBlogPost, getAllComments, getAllPosts, updateAPost, updateComment } from '../controllers/blog.js';
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ router.get('/post/:id', getABlogPost)
 router.delete('/delete/:id', deletePost)
 router.patch('/edit/:id', updateAPost)
 router.put('/comment/:id', commentOnPost)
-router.put('post/:id/comment/:id', updateComment)
+router.put('/post/:id/comment/:id', updateComment)
+router.get('/post/:id/allcomments', getAllComments)
 
 export default router;

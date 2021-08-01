@@ -196,10 +196,11 @@ export const updateComment = asyncHandler(async(req,res)=>{
 
 export const getAllComments = asyncHandler(async(req,res)=>{
   try {
-    const comments = await BlogModel.find({comments})
+    const {id} = req.params;
+    const post = await BlogModel.findById(id).select('comments')
 
-    if(comments){
-      return res.status(200).json({message: 'Success', data: comments})
+    if(post){
+      return res.status(200).json({message: 'Success', data: post})
     }else{
       return res.status(400).json({message: 'No comment found'})
 
@@ -207,5 +208,15 @@ export const getAllComments = asyncHandler(async(req,res)=>{
   } catch (error) {
     return res.status(400).json({message: error.message})
 
+  }
+})
+
+// get a single comment on a post
+
+export const getAComment = asyncHandler(async(req,res)=>{
+  try {
+    const {id} = req.params;
+  } catch (error) {
+    
   }
 })
