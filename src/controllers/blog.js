@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import UserModel from "../models/userModels.js";
 
-export const createUser = asyncHandler(async (req, res) => {
+export const createBlog = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
   
     const userExists = await UserModel.findOne({ email });
