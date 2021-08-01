@@ -50,3 +50,21 @@ export const createBlog = asyncHandler(async (req, res) => {
 
     }
   })
+
+  export const getAllPosts = asyncHandler(async(req,res)=>{
+    try {
+      const pageSize = Number(req.query.pageSize) || 3;
+      const page = Number(req.query.size) || 1;
+  
+      const count = await BlogModel.countDocuments();
+      const posts = await BlogModel.find()
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    res
+      .status(200)
+      .json({page, pages: Math.ceil(count / pageSize),data: posts });
+    } catch (error) {
+      return res.status(400).json({message: error.message})
+
+    }
+  })
