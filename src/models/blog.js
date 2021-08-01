@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
 
-const userSchema = mongoose.Schema({
+const blogSchema = mongoose.Schema({
     title: {
         type: 'String',
         required: true
@@ -13,13 +12,13 @@ const userSchema = mongoose.Schema({
     },
     comments: [
         {
-          trackId: Number,
+          commentId: Number,
           title: String,
         },
       ],
 }, { timestamps: true })
 
 
-const UserModel = mongoose.model('User', userSchema)
+const BlogModel = mongoose.model('Blog', blogSchema)
 
-export default UserModel
+export default BlogModel

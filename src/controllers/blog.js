@@ -1,30 +1,22 @@
 import asyncHandler from "express-async-handler";
-import UserModel from "../models/userModels.js";
+import BlogModel from "../models/blogModels.js";
 
 export const createBlog = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { title, body, comments } = req.body;
   
-    const userExists = await UserModel.findOne({ email });
-  
-    if (userExists) {
-      res.status(400);
-      throw new Error("User already exists");
-    }
-  
-    const user = await UserModel.create({
-      name,
-      email,
-      password,
+    const blog = await UserModel.create({
+      title,
+      body,
+      comments,
     });
-    if (user) {
+    if (blog) {
       res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token: generateToken(user._id),
+        _id: blog._id,
+        body: blog.body,
+        comments: blog.comments,
       });
     } else {
       res.status(400);
-      throw new Error("Invalid user data");
+      throw new Error("Invalid");
     }
   });
