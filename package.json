@@ -2,6 +2,11 @@
   "name": "gratisassement",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
+  },
   "repository": "https://github.com/Adedipupo/gratisassement.git",
   "author": "Benedict <jokanolaadedipupo@gmail.com>",
   "license": "MIT",
