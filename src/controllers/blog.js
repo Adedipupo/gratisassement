@@ -54,6 +54,9 @@ export const createBlog = asyncHandler(async (req, res) => {
   export const getABlogPost = asyncHandler(async(req,res)=>{
     try {
       const {id} = req.params;
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.failServerError("Invalid post Id");
+      }
       const post = await BlogModel.findById(id);
 
       if(post){
