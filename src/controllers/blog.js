@@ -169,6 +169,26 @@ export const createBlog = asyncHandler(async (req, res) => {
 
     } catch (error) {
       return res.status(400).json({message: error.message})
-
     }
   })
+
+// update a comment
+
+export const updateComment = asyncHandler(async(req,res)=>{
+  try {
+    const {id} = req.params;
+
+
+    const updateComment = await BlogModel.findByIdAndUpdate(
+      id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    return res.status(200).json({ message: 'success', data:updatePost });
+  } catch (error) {
+    return res.status(400).json({message: error.message})
+  }
+})
