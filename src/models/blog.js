@@ -14,7 +14,7 @@ const blogSchema = mongoose.Schema({
     comments: [
         {
           commentId: Number,
-          title: String,
+          comment: String,
         },
       ],
 }, { timestamps: true })
