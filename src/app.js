@@ -1,8 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import indexRouter from './routes/index';
-import { connectDB } from './config/db';
+import indexRouter from './routes/index.js';
+import { connectDB } from './config/db.js';
 
 dotenv.config();
 connectDB();

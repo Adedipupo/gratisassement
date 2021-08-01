@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import BlogModel from "../models/blogModels.js";
+import BlogModel from "../models/blog.js";
 
 export const createBlog = asyncHandler(async (req, res) => {
     const { title, body, comments } = req.body;
