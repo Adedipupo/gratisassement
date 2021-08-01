@@ -122,6 +122,10 @@ export const createBlog = asyncHandler(async (req, res) => {
     try {
       const { id } = req.params;
 
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({message: 'Invalid Id'})
+      }
+
       const updatePost = await BlogModel.findByIdAndUpdate(
         id,
         req.body,
@@ -133,5 +137,39 @@ export const createBlog = asyncHandler(async (req, res) => {
       return res.status(200).json({ message: 'success', data:updatePost });
     } catch (error) {
       return res.status(400).json({message: error.message})
+    }
+  })
+
+  // add comment to post
+
+  export const commentOnPost = asyncHandler(async(req, res)=>{
+    try {
+      const { comments } = req.body ;
+      const toComment = await BlogModel.findOne({
+        _id: req.params.id,
+        comments: { $in: [id] },
+      }).exec();
+
+      if (!toComment) {
+        const addedComment = await BlogModel.findOneAndUpdate(
+          { _id: req.params.id},
+          { $push: { comments: comments } },
+          { new: true }
+        ).exec();
+        if (addedComment) {
+          const newData = {
+            data: addedComment,
+          };
+          return res.status(200).json({ message: 'success', data:newData });
+
+        }
+        return res.status(400).json({message: 'failed'})
+
+      }
+      return res.status(400).json({message: error.message})
+
+    } catch (error) {
+      return res.status(400).json({message: error.message})
+
     }
   })
