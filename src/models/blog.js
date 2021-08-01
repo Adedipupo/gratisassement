@@ -13,7 +13,6 @@ const blogSchema = mongoose.Schema({
     },
     comments: [
         {
-          commentId: Number,
           comment: String,
         },
       ],

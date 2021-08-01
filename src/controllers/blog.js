@@ -146,14 +146,13 @@ export const createBlog = asyncHandler(async (req, res) => {
     try {
       const { commentId,comment } = req.body ;
       const toComment = await BlogModel.findOne({
-        _id: req.params.id,
-        comments: { $in: commentId,comment }
+        _id: req.params.id
       }).exec();
 
-      if (!toComment) {
+      if (toComment) {
         const addedComment = await BlogModel.findOneAndUpdate(
           { _id: req.params.id},
-          { $push: { comments: commentId,comment } },
+          { $push: { comments: {commentId,comment }} },
           { new: true }
         ).exec();
         if (addedComment) {
