@@ -51,6 +51,24 @@ export const createBlog = asyncHandler(async (req, res) => {
     }
   })
 
+  export const getABlogPost = asyncHandler(async(req,res)=>{
+    try {
+      const {id} = req.params;
+      const post = await BlogModel.findById(id);
+
+      if(post){
+        return res.status(200).json({message: 'Success',post: post});
+      }else{
+        return res.status(400).json({message: 'Post not found'})
+
+      }
+  
+    } catch (error) {
+      return res.status(400).json({message: error.message})
+
+    }
+  })
+
   export const getAllPosts = asyncHandler(async(req,res)=>{
     try {
       const pageSize = Number(req.query.pageSize) || 3;
