@@ -4,7 +4,7 @@ import BlogModel from "../models/blogModels.js";
 export const createBlog = asyncHandler(async (req, res) => {
     const { title, body, comments } = req.body;
   
-    const blog = await UserModel.create({
+    const blog = await BlogModel.create({
       title,
       body,
       comments,
