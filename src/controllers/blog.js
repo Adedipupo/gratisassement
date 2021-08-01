@@ -122,7 +122,7 @@ export const createBlog = asyncHandler(async (req, res) => {
     try {
       const { id } = req.params;
 
-      const updateUserProfile = await UserModel.findByIdAndUpdate(
+      const updatePost = await BlogModel.findByIdAndUpdate(
         id,
         req.body,
         {
@@ -130,7 +130,7 @@ export const createBlog = asyncHandler(async (req, res) => {
           runValidators: true,
         }
       );
-      return res.status(200).json({ msg: 'success', updateUserProfile });
+      return res.status(200).json({ message: 'success', data:updatePost });
     } catch (error) {
       return res.status(400).json({message: error.message})
     }
