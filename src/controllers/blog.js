@@ -67,7 +67,6 @@ export const createBlog = asyncHandler(async (req, res) => {
         return res.status(200).json({message: 'Success',post: post});
       }else{
         return res.status(400).json({message: 'Post not found'})
-
       }
   
     } catch (error) {
@@ -91,6 +90,48 @@ export const createBlog = asyncHandler(async (req, res) => {
       .json({page, pages: Math.ceil(count / pageSize),data: posts });
     } catch (error) {
       return res.status(400).json({message: error.message})
+    }
+  })
 
+  // delete  a blog post
+
+  export const deletePost = asyncHandler(async(req,res)=>{
+    try {
+      const {id} = req.params;
+
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({message: 'Invalid Id'})
+      }
+
+      const post = await BlogModel.findByIdAndRemove(id);
+
+      if(post){
+        return res.status(200).json({message: 'Deleted Successfully'});
+      }else{
+        return res.status(400).json({message: 'Post not found'})
+      }
+      
+    } catch (error) {
+      return res.status(400).json({message: error.message})
+    }
+  })
+
+  // update a blog post
+
+  export const updateAPost = asyncHandler(async(req,res)=>{
+    try {
+      const { id } = req.params;
+
+      const updateUserProfile = await UserModel.findByIdAndUpdate(
+        id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      return res.status(200).json({ msg: 'success', updateUserProfile });
+    } catch (error) {
+      return res.status(400).json({message: error.message})
     }
   })
