@@ -172,25 +172,6 @@ export const commentOnPost = asyncHandler(async (req, res) => {
   }
 })
 
-// update a comment
-
-export const updateComment = asyncHandler(async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const updateComment = await BlogModel.findByIdAndUpdate(
-      id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    return res.status(200).json({ message: 'success', data: updateComment });
-  } catch (error) {
-    return res.status(400).json({ message: error.message })
-  }
-})
 
 // get all comments on a post
 
@@ -214,6 +195,67 @@ export const getAllComments = asyncHandler(async (req, res) => {
 // get a single comment on a post
 
 export const getAComment = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const commentId = req.body.commentId
+
+    const post = await BlogModel.findById(id)
+
+    if (post) {
+      const commentIndex = await post.comments.findIndex((comment) => {
+        if (comment !== null) {
+          return comment._id == commentId
+        };
+      });
+      const comment = await post.comments[commentIndex];
+      return res.status(200).json({ message: 'Success', data: comment })
+    } else {
+      return res.status(400).json({ message: 'No comment found' })
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// update a comment
+
+export const updateComment = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const commentId = req.body.commentId
+
+    const post = await BlogModel.findById(id)
+
+    if (post) {
+      const commentIndex = await post.comments.findIndex((comment) => {
+        if (comment !== null) {
+          return comment._id == commentId
+        };
+      });
+      let comment = await post.comments[commentIndex];
+      post.comments[commentIndex] = { ...comment, ...req.body }
+      await post.save();
+
+
+
+      // const updateComment = await post.comments.findByIdAndUpdate(
+      //   commentId,
+      //   req.body,
+      //   {
+      //     new: true,
+      //     runValidators: true,
+      //   }
+      // );
+      return res.status(200).json({ message: 'success', data: post.comments[commentIndex] });
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
+  }
+})
+
+// delete a comment on a post
+
+export const deleteComment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const commentId = req.body.commentId

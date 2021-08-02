@@ -10,7 +10,7 @@ router.get('/post/:id', getABlogPost)
 router.delete('/delete/:id', deletePost)
 router.patch('/edit/:id', updateAPost)
 router.put('/comment/:id', commentOnPost)
-router.put('/post/:id/comment/:id', updateComment)
+router.put('/post/comment/:id', updateComment)
 router.get('/post/:id/allcomments', getAllComments)
 router.get('/post/comment/:id', getAComment)
 
