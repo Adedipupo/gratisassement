@@ -53,7 +53,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Link to the hosted Api
 
-link : https://documenter.getpostman.com/view/15233277/TzsfmjoZ
+link : https://documenter.getpostman.com/view/15233277/Tzsfnkw3
 
 ## Tools 
 $ Node.js
