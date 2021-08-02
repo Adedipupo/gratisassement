@@ -236,16 +236,6 @@ export const updateComment = asyncHandler(async (req, res) => {
       post.comments[commentIndex] = { ...comment, ...req.body }
       await post.save();
 
-
-
-      // const updateComment = await post.comments.findByIdAndUpdate(
-      //   commentId,
-      //   req.body,
-      //   {
-      //     new: true,
-      //     runValidators: true,
-      //   }
-      // );
       return res.status(200).json({ message: 'success', data: post.comments[commentIndex] });
     }
   } catch (error) {
@@ -268,8 +258,8 @@ export const deleteComment = asyncHandler(async (req, res) => {
           return comment._id == commentId
         };
       });
-      const comment = await post.comments[commentIndex];
-      return res.status(200).json({ message: 'Success', data: comment })
+       await post.comments.splice([commentIndex],1);
+      return res.status(200).json({ message: 'Successfully Deleted' })
     } else {
       return res.status(400).json({ message: 'No comment found' })
     }
