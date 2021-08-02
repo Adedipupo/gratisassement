@@ -1,5 +1,5 @@
-import express from 'express';
-import { commentOnPost, createBlog, deleteComment, deletePost, getABlogPost, getAComment, getAllBlogPost, getAllComments, getAllPosts, updateAPost, updateComment } from '../controllers/blog.js';
+const express = require('express');
+const { commentOnPost, createBlog, deleteComment, deletePost, getABlogPost, getAComment, getAllBlogPost, getAllComments, getAllPosts, updateAPost, updateComment } = require('../controllers/blog.js');
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get('/post/:id/allcomments', getAllComments)
 router.get('/post/comment/:id', getAComment)
 router.delete('/post/comment/:id', deleteComment)
 
-export default router;
+module.exports =  router;

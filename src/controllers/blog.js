@@ -1,12 +1,11 @@
-import asyncHandler from "express-async-handler";
-import BlogModel from "../models/blog.js";
-import mongoose from 'mongoose';
+const asyncHandler = require("express-async-handler");
+const BlogModel = require("../models/blog.js");
+const mongoose = require('mongoose');
 
 // create a blog post
-export const createBlog = asyncHandler(async (req, res) => {
+exports.createBlog = asyncHandler(async (req, res) => {
   try {
     const { title, body, comments } = req.body;
-
 
     const titleExists = await BlogModel.findOne({ title });
 
@@ -37,7 +36,7 @@ export const createBlog = asyncHandler(async (req, res) => {
 });
 
 // get all blog posts  
-export const getAllBlogPost = asyncHandler(async (req, res) => {
+exports.getAllBlogPost = asyncHandler(async (req, res) => {
   try {
     const posts = await BlogModel.find();
 
@@ -55,7 +54,7 @@ export const getAllBlogPost = asyncHandler(async (req, res) => {
 })
 
 // get a single blog post  
-export const getABlogPost = asyncHandler(async (req, res) => {
+exports.getABlogPost = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -76,7 +75,7 @@ export const getABlogPost = asyncHandler(async (req, res) => {
 })
 
 // get all blog postswith pagination  
-export const getAllPosts = asyncHandler(async (req, res) => {
+exports.getAllPosts = asyncHandler(async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize) || 3;
     const page = Number(req.query.size) || 1;
@@ -95,7 +94,7 @@ export const getAllPosts = asyncHandler(async (req, res) => {
 
 // delete  a blog post
 
-export const deletePost = asyncHandler(async (req, res) => {
+exports.deletePost = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -118,7 +117,7 @@ export const deletePost = asyncHandler(async (req, res) => {
 
 // update a blog post
 
-export const updateAPost = asyncHandler(async (req, res) => {
+exports.updateAPost = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -142,7 +141,7 @@ export const updateAPost = asyncHandler(async (req, res) => {
 
 // add comment to post
 
-export const commentOnPost = asyncHandler(async (req, res) => {
+exports.commentOnPost = asyncHandler(async (req, res) => {
   try {
     const { commentId, comment } = req.body;
     const toComment = await BlogModel.findOne({
@@ -175,7 +174,7 @@ export const commentOnPost = asyncHandler(async (req, res) => {
 
 // get all comments on a post
 
-export const getAllComments = asyncHandler(async (req, res) => {
+exports.getAllComments = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const post = await BlogModel.findById(id).select('comments')
@@ -194,7 +193,7 @@ export const getAllComments = asyncHandler(async (req, res) => {
 
 // get a single comment on a post
 
-export const getAComment = asyncHandler(async (req, res) => {
+exports.getAComment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const commentId = req.body.commentId
@@ -219,7 +218,7 @@ export const getAComment = asyncHandler(async (req, res) => {
 
 // update a comment
 
-export const updateComment = asyncHandler(async (req, res) => {
+exports.updateComment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const commentId = req.body.commentId
@@ -245,7 +244,7 @@ export const updateComment = asyncHandler(async (req, res) => {
 
 // delete a comment on a post
 
-export const deleteComment = asyncHandler(async (req, res) => {
+exports.deleteComment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const commentId = req.body.commentId
